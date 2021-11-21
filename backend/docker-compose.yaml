@@ -1,0 +1,19 @@
+version: "3"
+services:
+  db:
+    container_name: GROW_Postgres
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: postgres
+      POSTGRES_DB: grow
+    network_mode: "host"
+
+  python:
+    container_name: GROW_Python
+    build: ./
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    network_mode: "host"
