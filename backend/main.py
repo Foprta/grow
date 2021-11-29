@@ -1,16 +1,14 @@
 from flask import Flask
-import uuid
-from db import Check_User
+from db import new_user
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return str(uuid.uuid4())
+    return "Hello"
 
-@app.route('/api/user')
-def New_User():
-    New_Id = str(uuid.uuid4())
-    return Check_User(New_Id)
+@app.route('/api/user', mehods=['POST'])
+def db_new_user():
+    return new_user()
 
     
 
