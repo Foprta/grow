@@ -1,2 +1,4 @@
 Flask==2.0.2
 uuid==1.30
+sqlalchemy=1.4.27
+flask_sqlalchemy=2.5.1
