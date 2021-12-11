@@ -1,5 +1,6 @@
 import preprocess from 'svelte-preprocess';
-import adapter from "@sveltejs/adapter-node";
+import adapter from '@sveltejs/adapter-node';
+import { optimizeCss } from 'carbon-preprocess-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,13 +13,16 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter({ out: "build" }),
-		target: "#svelte",
+		adapter: adapter({ out: 'build' }),
+		target: '#svelte',
 		router: true,
 		ssr: true,
 		hydrate: true,
-		trailingSlash: "never",
-		amp: false
+		trailingSlash: 'never',
+		amp: false,
+		vite: {
+			plugins: [process.env.NODE_ENV === 'production' && optimizeCss()]
+		}
 	}
 };
 
