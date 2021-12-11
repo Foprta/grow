@@ -4,10 +4,19 @@
 	import Search from 'carbon-components-svelte/src/Search/Search.svelte';
 
 	let userId: string;
+	let searchTerm = '';
+	let coins = [];
 
-	let searchTerm: string;
+	$: {
+		if (!searchTerm) {
+			coins = [];
+		} else {
+		const url = new URL("http://localhost:5000/api/coins/search");
+		url.searchParams.append("name", searchTerm);
 
-	$: coins = ['Bitcoin', 'Ethereum', 'Litecoin'].filter((coin) => coin.includes(searchTerm));
+		fetch(url).then(r => r.json()).then(result => coins = result.coins)	
+		}
+	}
 
 	onMount(() => {
 		userId = localStorage.getItem('userId');
@@ -38,7 +47,7 @@
 
 	<ul>
 		{#each coins as coin}
-			<li class="py-5 px-12 hover:bg-gray-200">{coin}</li>
+			<li class="py-5 px-12 hover:bg-gray-200">{coin.name} <span class="text-gray-500">{coin.slug}</span></li>
 		{/each}
 	</ul>
 </div>
