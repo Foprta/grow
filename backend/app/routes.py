@@ -1,20 +1,31 @@
 from app import app, db
-from app.models import Users
+from app.models import Users, Portfolio
 from app.coinmarketcap import update_coins, search_coins
+from app.users import new_user
 from flask import request
+import json
+from app.portfolios import get_portfolio, update_portfolio
 
 
 @app.route('/')
 def index():
     return "HELLO MAN"
 
+@app.route('/api/user/portfolios')
+def get_portfolios():
+    name = request.args.get('userId')
+    res = get_portfolio(name)
+    return res
+
+
+@app.route('/api/user/portfolio', methods=["POST"])
+def create_portfolio():
+    update_portfolio(json.loads(request.data))
+    return ""
 
 @app.route('/api/user', methods=["POST"])
 def user_create():
-    user = Users()
-    db.session.add(user)
-    db.session.commit()
-    return user.id
+    return new_user()
 
 
 # @app.route('/api/coin')
