@@ -6,4 +6,4 @@ COPY . /app
 
 WORKDIR /app
 
-CMD npm ci --verbose && npm run start
+CMD npm ci --verbose && npm run start -- --host
