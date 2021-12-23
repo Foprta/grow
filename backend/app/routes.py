@@ -1,6 +1,6 @@
 from app import app, db
 from app.models import Users
-from app.coinmarketcap import get_coins, search_coins
+from app.coinmarketcap import update_coins, search_coins
 from flask import request
 
 
@@ -17,10 +17,10 @@ def user_create():
     return user.id
 
 
-@app.route('/api/coin')
-def coin_create():
-    get_coins()
-    return "database successfully updated"
+# @app.route('/api/coin')
+# def coin_create():
+#     update_coins()
+#     return "database successfully updated"
 
 
 @app.route('/api/coins/search', methods=["GET"])
