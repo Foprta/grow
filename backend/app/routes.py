@@ -25,7 +25,8 @@ def create_portfolio():
 
 @app.route('/api/user', methods=["POST"])
 def user_create():
-    return new_user()
+    new_user(json.loads(request.data))
+    return ""
 
 
 # @app.route('/api/coin')

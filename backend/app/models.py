@@ -1,13 +1,12 @@
 from app import db
-from uuid import uuid4
 from sqlalchemy import inspect
 
 
 class Users(db.Model):
-    id = db.Column(db.String(256), primary_key=True)
+    id = db.Column(db.String(42), primary_key=True)
 
-    def __init__(self):
-        self.id = str(uuid4())
+    def __init__(self, address):
+        self.id = address
 
 
 class Coins(db.Model):
