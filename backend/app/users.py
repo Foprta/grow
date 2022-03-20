@@ -1,4 +1,4 @@
-from app.models import Coins, Users
+from app.models import Users
 from app import db
 
 def new_user(dto):
