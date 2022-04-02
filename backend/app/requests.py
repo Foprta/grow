@@ -1,9 +1,10 @@
 from requests import Request, Session
 import json
+from os import environ
 
 headers = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': 'be8d578e-76db-4896-ace0-663aac314963',
+    'X-CMC_PRO_API_KEY': environ.get('COINMARKETCAP_API_KEY'),
 }
 
 
