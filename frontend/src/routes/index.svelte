@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import InlineLoading from 'carbon-components-svelte/src/InlineLoading/InlineLoading.svelte';
 	import Search from 'carbon-components-svelte/src/Search/Search.svelte';
+	import Button from 'carbon-components-svelte/src/Button/Button.svelte';
 	import axios from 'axios';
+	import { defaultEvmStores, web3 } from 'svelte-web3';
 
-	let userId: string;
+	let userAddress: string;
 	let searchTerm = '';
 	let coins = [];
+	let jwt = undefined;
 
 	let stopSearch = new AbortController();
 
@@ -21,31 +23,47 @@
 			axios
 				.get('http://localhost:5000/api/coins/search', {
 					params: { name: searchTerm },
-					signal: stopSearch.signal
+					signal: stopSearch.signal,
+					headers: { Authorization: 'Bearer ' + jwt }
 				})
 				.then((result) => (coins = result.data.coins));
 		}
 	}
 
+	const login = () => {
+		$web3.eth.getAccounts().then(([address]) => {
+			axios
+				.post('http://localhost:5000/api/login/1', { address })
+				.then(({ data }) => $web3.eth.personal.sign(data.toString(), address, undefined))
+				.then((signature) =>
+					axios.post('http://localhost:5000/api/login/2', {
+						address,
+						signature
+					})
+				)
+				.then((result) => (jwt = result.data));
+		});
+	};
+
 	onMount(() => {
-		userId = localStorage.getItem('userId');
-
-		if (!userId) {
-			axios.post('http://localhost:5000/api/user').then((res) => {
-				userId = res.data;
-
-				localStorage.setItem('userId', userId);
-			});
-		}
+		defaultEvmStores.setProvider();
+		userAddress = window?.ethereum.selectedAddress;
 	});
 </script>
 
+<div class="flex">
+	<Button class="" kind="tertiary">Добавить портфолио</Button>
+	{#if $web3}
+		<Button kind="tertiary" on:click={login}>Логин</Button>
+	{/if}
+</div>
+
 <div class="flex items-center mb-3">
 	<span class="whitespace-nowrap">Your ID is:</span>
-	{#if userId}
-		<span class="font-bold">{userId}</span>
+	{#if userAddress}
+		<span class="font-bold">{userAddress}</span>
 	{:else}
-		<InlineLoading small class="ml-3" />
+		Please connect your MetaMask
 	{/if}
 </div>
 
