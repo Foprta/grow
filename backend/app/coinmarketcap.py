@@ -58,4 +58,3 @@ def search_coins(name, size):
         res['coins'].append(coin.as_dict())
 
     return res
-

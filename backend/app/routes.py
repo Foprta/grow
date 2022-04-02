@@ -1,12 +1,13 @@
 from flask_restful import abort
 from app import app
-from app.coinmarketcap import search_coins
+from app.coinmarketcap import search_coins, update_coins
 from app.users import new_user
 from app.transaction import new_transaction
 from flask import request
 import json
 from app.portfolios import get_portfolio, new_portfolio
 from app.auth import create_jwt, new_auth, login_required
+from os import environ
 
 
 @app.route('/')
@@ -40,7 +41,10 @@ def add_transaction_to_portfolio(portfolio_id, token):
     return ""
 
 
-
+@app.route(environ.get("ROUTE_UPDATE_COINS"), methods=["POST"])
+def update_coins_db():
+    update_coins()
+    return "s"
 
 
 @app.route('/api/coins/search', methods=["GET"])
