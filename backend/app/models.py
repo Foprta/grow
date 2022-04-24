@@ -3,11 +3,6 @@ from sqlalchemy import inspect
 import random
 import datetime
 
-class Users(db.Model):
-    id = db.Column(db.String(42), primary_key=True)
-
-    def __init__(self, address):
-        self.id = address
 
 
 class Coins(db.Model):
