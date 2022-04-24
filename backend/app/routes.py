@@ -1,11 +1,9 @@
-from flask_restful import abort
 from app import app
 from app.coinmarketcap import search_coins, update_coins
-from app.users import new_user
 from app.transaction import new_transaction
 from flask import request
 import json
-from app.portfolios import get_portfolio, new_portfolio
+from app.portfolios import get_portfolios, new_portfolio
 from app.auth import create_jwt, new_auth, login_required
 from os import environ
 
@@ -15,11 +13,11 @@ def index():
     return "HELLO MAN"
 
 
-@app.route('/api/user/portfolios')
-def get_portfolios():
-    name = request.args.get('userId')
-    res = get_portfolio(name)
-    return res
+@app.route('/api/secured/user/portfolios')
+@login_required
+def get_user_portfolios(token):
+    print(token['address'])
+    return get_portfolios(token['address'])
 
 
 @app.route('/api/user/portfolio', methods=["POST"])
@@ -28,17 +26,16 @@ def create_portfolio():
     return ""
 
 
-@app.route('/api/user', methods=["POST"])
-def user_create():
-    new_user(json.loads(request.data))
-    return ""
+@app.route('/api/secured/user/portfolio', methods=["GET"])
+@login_required
+def get_portfolio_transactions(portfolio_id, token):
+    pass
 
 
-@app.route('/api/user/portfolio/<portfolio_id>/transaction', methods=["POST"])
+@app.route('/api/secured/user/portfolio/<portfolio_id>/transaction', methods=["POST"])
 @login_required
 def add_transaction_to_portfolio(portfolio_id, token):
-    new_transaction(json.loads(request.data), int(portfolio_id))
-    return ""
+    return new_transaction(json.loads(request.data), int(portfolio_id))
 
 
 @app.route(environ.get("ROUTE_UPDATE_COINS"), methods=["POST"])
