@@ -3,6 +3,7 @@ from app import db
 from app.models import Coins
 from app.requests import get_logos, get_coins
 from time import sleep
+from flask import jsonify
 
 
 def update_coins():
@@ -54,8 +55,8 @@ def search_coins(name, size):
         )
     ).limit(size)
 
-    res = {'coins': []}
+    res = []
     for coin in result.all():
-        res['coins'].append(coin.as_dict())
+        res.append(coin.as_dict())
 
-    return res
+    return jsonify(res)

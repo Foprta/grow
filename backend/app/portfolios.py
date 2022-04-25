@@ -1,14 +1,15 @@
 from app import db
 from app.models import Portfolio
+from flask import jsonify
 
 def get_portfolios(user_address):
     result = Portfolio.query.filter(Portfolio.user_id==user_address)
 
-    res = {'portfolios': []}
+    res = []
     for portfolio in result.all():
-        res['portfolios'].append(portfolio.as_dict())
+        res.append(portfolio.as_dict())
 
-    return res
+    return jsonify(res)
 
 def get_portfolio_transaction():
     pass
