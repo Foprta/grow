@@ -14,10 +14,11 @@ def get_portfolio_transaction():
     pass
     result = Portfolio.query.filter()
 
-def new_portfolio(data):
-    new_portfolio = Portfolio(data['name'], data['user_id'])
+def new_portfolio(data, user_id):
+    new_portfolio = Portfolio(data['name'], user_id)
     db.session.add(new_portfolio)
     db.session.commit()
+    return new_portfolio.as_dict()
 
 #def token_add(data):
 #    new_token = Transaction(data['name'], data['user_id'])

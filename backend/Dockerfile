@@ -8,6 +8,8 @@ RUN apt update -y
 
 RUN apt install -y python3.8 python3-pip
 
+COPY requirements.txt /app/requirements.txt
+
 COPY . /app
 
 WORKDIR /app 

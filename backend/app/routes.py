@@ -16,14 +16,13 @@ def index():
 @app.route('/api/secured/user/portfolios')
 @login_required
 def get_user_portfolios(token):
-    print(token['address'])
     return get_portfolios(token['address'])
 
 
-@app.route('/api/user/portfolio', methods=["POST"])
-def create_portfolio():
-    new_portfolio(json.loads(request.data))
-    return ""
+@app.route('/api/secured/user/portfolio', methods=["POST"])
+@login_required
+def create_portfolio(token):
+    return new_portfolio(json.loads(request.data), token['address'])
 
 
 @app.route('/api/secured/user/portfolio', methods=["GET"])
@@ -40,8 +39,7 @@ def add_transaction_to_portfolio(portfolio_id, token):
 
 @app.route(environ.get("ROUTE_UPDATE_COINS"), methods=["POST"])
 def update_coins_db():
-    update_coins()
-    return "s"
+    return update_coins()
 
 
 @app.route('/api/coins/search', methods=["GET"])

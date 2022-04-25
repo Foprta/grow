@@ -14,9 +14,6 @@ def get_logos(ids):
     response = session.get(
         'https://pro-api.coinmarketcap.com/v1/cryptocurrency/info', params={'id': ids, 'aux': 'logo'})
     session.close()
-
-
-
     return json.loads(response.text)
 
 
