@@ -20,7 +20,7 @@ def update_coins():
     logos = {}
 
     for i in range(0, int(len(ids)/size + 1)):
-        sleep(1)
+        sleep(5)
         strIds = ','.join(str(id) for id in ids[i*size:(i+1)*size])
         result = get_logos(strIds)
         logos.update(result['data'])
@@ -37,6 +37,7 @@ def update_coins():
 
         db.session.add(new_coin)
     db.session.commit()
+    return "success"
 
 
 def search_coins(name, size):
