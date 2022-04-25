@@ -17,12 +17,20 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         try:
             _, encodedJwt = request.headers["Authorization"].split(" ")
-            token = jwt.decode(encodedJwt, JWT_SECRET, algorithms=["HS256"])
-            return f(token=token, *args, **kwargs)
         except:
-            abort(500)
-    return decorated_function
+            return abort(401, "No access token")
 
+        try:
+            token = jwt.decode(encodedJwt, JWT_SECRET, algorithms=["HS256"])
+        except:
+            abort(401, "token invalid")
+
+        try:    
+            return f(token=token, *args, **kwargs)
+        except Exception as e:
+            return abort(e)
+    return decorated_function
+#JSONDecodeError
 
 def new_auth(dto):
     auth = Auth(dto["address"])
