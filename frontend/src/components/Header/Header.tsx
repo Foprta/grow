@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Header.module.scss";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {Button, Typography} from "@mui/material";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 import authService from "../../services/authService";
 
 const Header: React.FC = () => {
@@ -17,8 +17,8 @@ const Header: React.FC = () => {
     <div className={styles.header}>
       <div>
         <NavLink className={styles.logoLink} to="/">
-          <h3 >Gro</h3>
-          <img src="/logo192.png" height="40" width="50" alt="logo"/>
+          <h3>Gro</h3>
+          <img src="/logo192.png" height="40" width="50" alt="logo" />
         </NavLink>
 
         {location.pathname !== "/login" && (
@@ -27,7 +27,6 @@ const Header: React.FC = () => {
           </Button>
         )}
       </div>
-
     </div>
   );
 };

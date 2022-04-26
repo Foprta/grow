@@ -1,0 +1,67 @@
+.portfoliosList {
+  @apply flex flex-col items-stretch shadow-lg overflow-hidden;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 340px;
+}
+
+.portfolio {
+  @apply flex items-center px-12;
+
+  cursor: pointer;
+  color: white;
+  height: 64px;
+  font-size: 18px;
+  transition: all 0.1s;
+  border-bottom: 1px solid rgba(255,255,255, 0.03);
+
+  .icon {
+    @apply ml-auto;
+
+    color: transparent;
+    transition: transform 0.1s;
+  }
+
+  &.active {
+    .portfolioNameOuter {
+      transform: translateX(calc(100% + 40px));
+    }
+
+    .portfolioNameInner {
+      @apply text-right;
+
+      transform: translateX(-100%);
+    }
+
+    background-color: rgba(0, 0, 0, 0.15);
+    font-weight: 700;
+  }
+
+  &:hover:not(.active):not(:last-child) {
+    background-color: rgba(0, 0, 0, 0.05);
+
+    .icon {
+      color: white;
+      transform: translateX(20px);
+    }
+  }
+
+  &:last-child {
+    margin-top: auto;
+    background-color: forestgreen;
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+.portfolioNameOuter {
+  @apply w-full text-left;
+
+  transition: 0.1s transform;
+}
+
+.portfolioNameInner {
+  @apply inline-block;
+
+  transition: 0.15s transform;
+}

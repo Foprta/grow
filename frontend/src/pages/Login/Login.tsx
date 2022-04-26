@@ -15,12 +15,8 @@ const Login: React.FC = () => {
   const login = useCallback(() => {
     authService
       .getMessageForSign(account!)
-      .then((messageToSign) =>
-        provider?.getSigner().signMessage(messageToSign.toString())
-      )
-      .then((signedMessage) =>
-        authService.getAuthToken(account!, signedMessage!)
-      )
+      .then((messageToSign) => provider?.getSigner().signMessage(messageToSign.toString()))
+      .then((signedMessage) => authService.getAuthToken(account!, signedMessage!))
       .then((token) => {
         authService.setJWT(token);
         navigate("/");
@@ -32,24 +28,14 @@ const Login: React.FC = () => {
       {account ? (
         <>
           <Typography variant="h4">Войдите в систему</Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={login}
-          >
+          <Button variant="contained" color="primary" size="large" onClick={login}>
             Войти
           </Button>
         </>
       ) : (
         <>
           <Typography variant="h4">Подключите MetaMask</Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => void metamask.activate()}
-          >
+          <Button variant="contained" color="primary" size="large" onClick={() => void metamask.activate()}>
             Подключить
           </Button>
         </>

@@ -2,42 +2,40 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Raleway";
+  font-family: Raleway;
   font-weight: 400;
   src: url("./fonts/Raleway-Regular.ttf");
 }
 
 @font-face {
-  font-family: "Raleway";
+  font-family: Raleway;
   font-weight: 500;
   src: url("./fonts/Raleway-Medium.ttf");
 }
 
 @font-face {
-  font-family: "Raleway";
+  font-family: Raleway;
   font-weight: 600;
   src: url("./fonts/Raleway-SemiBold.ttf");
 }
 
 @font-face {
-  font-family: "Raleway";
+  font-family: Raleway;
   font-weight: 700;
   src: url("./fonts/Raleway-Bold.ttf");
 }
 
-
 html,
 body {
   margin: 0;
-  font-family: 'Raleway', sans-serif ;
-
+  font-family: Raleway, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --max-app-width: 960px;
+  color: white;
+  background: radial-gradient(circle at top, #212971 0%, #2b3865 100%);
 }
 
-
 .MuiTypography-root {
-  font-family: 'Raleway', sans-serif !important;
+  font-family: Raleway, sans-serif !important;
 }

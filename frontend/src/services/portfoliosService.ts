@@ -1,27 +1,25 @@
-import {PortfolioInDto} from "../models/dto";
-import {PortfolioOutDto} from "../models/dto/PortfolioOutDto";
-import {createApi} from "@reduxjs/toolkit/query/react";
-import {securedBaseQuery} from "./baseQueries";
+import { PortfolioInDto, PortfolioOutDto } from "../models/dto";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { securedBaseQuery } from "./baseQueries";
 
 export const portfoliosAPI = createApi({
-  reducerPath: 'portfoliosApi',
+  reducerPath: "portfoliosAPI",
   baseQuery: securedBaseQuery,
-  tagTypes: ['Portfolios'],
+  tagTypes: ["Portfolios"],
   endpoints: (build) => ({
-    fetchUserPortfolios: build.query<{ portfolios: PortfolioOutDto[] }, void>({
+    fetchPortfolios: build.query<PortfolioOutDto[], void>({
       query: () => ({
-        url: '/user/portfolios'
+        url: "/user/portfolios",
       }),
-      providesTags: ['Portfolios']
+      providesTags: ["Portfolios"],
     }),
-    addUserPortfolio: build.mutation<PortfolioOutDto, PortfolioInDto>({
+    addPortfolio: build.mutation<PortfolioOutDto, PortfolioInDto>({
       query: (portfolio) => ({
-        url: '/user/portfolio',
-        method: 'POST',
-        body: portfolio
+        url: "/user/portfolio",
+        method: "POST",
+        body: portfolio,
       }),
-      invalidatesTags: ['Portfolios']
-    })
-  })
-})
-
+      invalidatesTags: ["Portfolios"],
+    }),
+  }),
+});
