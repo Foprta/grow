@@ -13,15 +13,11 @@ function clearJWT(): void {
 }
 
 function getMessageForSign(address: string): Promise<string> {
-  return httpClient
-    .post<string>("/api/login/1", { address })
-    .then(({ data }) => data);
+  return httpClient.post<string>("/api/login/1", { address }).then(({ data }) => data);
 }
 
 function getAuthToken(address: string, signature: string): Promise<string> {
-  return httpClient
-    .post("/api/login/2", { address, signature })
-    .then(({ data }) => data);
+  return httpClient.post("/api/login/2", { address, signature }).then(({ data }) => data);
 }
 
 const authService = {

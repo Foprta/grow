@@ -9,34 +9,32 @@ import Home from "./pages/Home/Home";
 import RouteGuard from "./components/RouteGuard";
 import Portfolio from "./pages/Home/Portfolio/Portfolio";
 import { Provider } from "react-redux";
-import {setupStore} from "./store";
+import { setupStore } from "./store";
 
 const store = setupStore();
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <RouteGuard>
-                <Home />
-              </RouteGuard>
-            }
-          >
-            <Route path="/portfolio/:portfolioId" element={<Portfolio />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="login" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                <RouteGuard>
+                  <Home />
+                </RouteGuard>
+              }
+            >
+              <Route path="/portfolio/:portfolioId" element={<Portfolio />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

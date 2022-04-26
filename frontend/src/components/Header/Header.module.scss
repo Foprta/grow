@@ -1,11 +1,12 @@
 .header {
-  background-color: blue;
+  @apply shadow-md;
+
+  background-color: #20005d;
 
   & > div {
-    @apply flex items-center justify-between mx-auto;
+    @apply flex items-center justify-between mx-auto px-12;
 
     height: 56px;
-    max-width: var(--max-app-width);
   }
 }
 

@@ -1,0 +1,13 @@
+{
+  "plugins": ["tailwindcss", "prettier"],
+  "extends": ["react-app", "react-app/jest", "plugin:tailwindcss/recommended", "plugin:prettier/recommended"],
+  "rules": {
+    "tailwindcss/no-custom-classname": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "quotes": "off",
+    "max-len": "off",
+    "prettier/prettier": ["warn", {
+      "printWidth": 120
+    }]
+  }
+}
