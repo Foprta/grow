@@ -1,7 +1,7 @@
 import axios from "axios";
 import authService from "./authService";
 
-const httpClient = axios.create({ baseURL: "http://localhost:5000" });
+const httpClient = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL });
 
 httpClient.interceptors.request.use((config) => {
   if (config.headers && config.url?.startsWith("/api/secured/")) {
