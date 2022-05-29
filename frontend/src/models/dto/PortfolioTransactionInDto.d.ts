@@ -4,5 +4,6 @@ export interface PortfolioTransactionInDto {
   coin_id: NumberInput;
   count: NumberInput;
   price: NumberInput;
-  buy_date: string;
+  date: string;
+  transaction_type: string;
 }
