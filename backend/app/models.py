@@ -38,17 +38,38 @@ class Portfolio(db.Model):
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     coin_id = db.Column(db.Integer)
-    count = db.Column(db.Integer)
-    price = db.Column(db.Integer)
-    buy_date = db.Column(db.DateTime())
+    count = db.Column(db.Float)
+    price = db.Column(db.Float)
+    date = db.Column(db.DateTime())
+    transaction_type = db.Column(db.String)
     portfolio_id  = db.Column(db.Integer)
 
-    def __init__(self, coin_id, count, price, buy_date, portfolio_id):
+    def __init__(self, coin_id, count, price, date, transaction_type, portfolio_id):
         self.coin_id = coin_id
         self.count = count
         self.price = price
-        self.buy_date = buy_date
+        self.date = date
+        self.transaction_type = transaction_type
         self.portfolio_id = portfolio_id
+
+    def as_dict(self):
+        return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+
+class Tokens(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    coin_id = db.Column(db.Integer)
+    count = db.Column(db.Float)
+    price = db.Column(db.Float)
+    portfolio_id  = db.Column(db.Integer)
+    logo = db.Column(db.String(256))
+
+
+    def __init__(self, coin_id, count, price, portfolio_id, logo):
+        self.coin_id = coin_id
+        self.count = count
+        self.price = price
+        self.portfolio_id = portfolio_id
+        self.logo = logo
 
     def as_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
