@@ -8,41 +8,37 @@ import { CoinOutDto, PortfolioTransactionInDto } from "../../../models/dto";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { transactionsAPI } from "../../../services/transactionsService";
+import Coins from "./Coins/Coins";
 
 const Portfolio: React.FC = () => {
   const [coinSearch, setCoinSearch] = useState("");
   const { portfolioId } = useParams();
 
-  const { data: transactions } = transactionsAPI.useFetchPortfolioTransactionsQuery(portfolioId!);
   const [addTransaction] = transactionsAPI.useAddPortfolioTransactionMutation();
 
-  const { handleChange, values, handleSubmit, setFieldValue } = useFormik<PortfolioTransactionInDto>({
-    initialValues: { price: "", buy_date: "", coin_id: "", count: "" },
+  const { values, handleChange, setFieldValue, submitForm } = useFormik<PortfolioTransactionInDto>({
+    initialValues: { price: "", date: "", coin_id: "", count: "", transaction_type: "buy" },
     onSubmit: (dto) => addTransaction({ ...dto, portfolioId: portfolioId! }),
   });
+
+  const buy = () => {
+    setFieldValue("transaction_type", "buy").then(() => submitForm());
+  };
+
+  const sell = () => {
+    setFieldValue("transaction_type", "sale").then(() => submitForm());
+  };
 
   const { data: coins } = coinsAPI.useFetchCoinsQuery({ name: coinSearch });
 
   return (
     <div>
-      <Typography variant="h4">ID: {portfolioId}</Typography>
-
-      {transactions && transactions.length > 0 && <Typography variant="h4">Transactions:</Typography>}
-
-      {transactions?.map((transaction) => (
-        <div key={transaction.id} className={styles.transaction}>
-          <span>Coin ID: {transaction.coin_id}</span>
-          <span>Date Buy: {new Date(transaction.buy_date).toLocaleString()}</span>
-          <span>Count: {transaction.count}</span>
-          <span>Price: {transaction.price}</span>
-          <span>Transaction ID: {transaction.id}</span>
-        </div>
-      ))}
+      <Coins />
 
       <Card>
         <CardHeader title="Добавить транзакцию" />
 
-        <form onSubmit={handleSubmit}>
+        <form>
           <CardContent className={styles.portfolioForm}>
             <Autocomplete
               fullWidth
@@ -90,16 +86,19 @@ const Portfolio: React.FC = () => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 renderInput={(props) => <TextField {...props} />}
-                value={values.buy_date}
-                onChange={(value: Date | null) => setFieldValue("buy_date", value?.toISOString())}
+                value={values.date}
+                onChange={(value: Date | null) => setFieldValue("date", value?.toISOString())}
                 label="Время покупки"
               />
             </LocalizationProvider>
           </CardContent>
 
           <CardActions>
-            <Button variant="outlined" type="submit">
-              Добавить транзакцию
+            <Button variant="outlined" onClick={buy}>
+              Купить
+            </Button>
+            <Button variant="outlined" onClick={sell}>
+              Продать
             </Button>
           </CardActions>
         </form>
